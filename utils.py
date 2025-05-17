@@ -25,8 +25,12 @@ def invite_candidate(interview_id, name, email):
     url = f"{BASE_URL}/interview/invite"
     data = {
         "interview_id": interview_id,
-        "candidate_name": name,
-        "candidate_email": email
+        "candidates": [
+            {
+                "candidate_name": name,
+                "candidate_email": email
+            }
+        ]
     }
     try:
         response = requests.post(url, json=data, headers=HEADERS)
@@ -51,4 +55,5 @@ def get_reports():
             return {"error": error_message}
     except Exception as e:
         return {"error": str(e)}
+
 
