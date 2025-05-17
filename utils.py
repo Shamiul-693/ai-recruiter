@@ -10,8 +10,16 @@ HEADERS = {
 
 def create_interview(payload):
     url = f"{BASE_URL}/interview"
-    response = requests.post(url, json=payload, headers=HEADERS)
-    return response.json()
+    try:
+        response = requests.post(url, json=payload, headers=HEADERS)
+        data = response.json()
+        if response.status_code == 200 and data.get("status", False):
+            return data
+        else:
+            error_message = data.get("message", "Unknown error occurred")
+            return {"error": error_message}
+    except Exception as e:
+        return {"error": str(e)}
 
 def invite_candidate(interview_id, name, email):
     url = f"{BASE_URL}/interview/invite"
@@ -20,11 +28,27 @@ def invite_candidate(interview_id, name, email):
         "candidate_name": name,
         "candidate_email": email
     }
-    response = requests.post(url, json=data, headers=HEADERS)
-    return response.json()
+    try:
+        response = requests.post(url, json=data, headers=HEADERS)
+        resp_data = response.json()
+        if response.status_code == 200 and resp_data.get("status", False):
+            return resp_data
+        else:
+            error_message = resp_data.get("message", "Unknown error occurred")
+            return {"error": error_message}
+    except Exception as e:
+        return {"error": str(e)}
 
 def get_reports():
     url = f"{BASE_URL}/interview/reports"
-    response = requests.get(url, headers=HEADERS)
-    return response.json()
+    try:
+        response = requests.get(url, headers=HEADERS)
+        data = response.json()
+        if response.status_code == 200 and data.get("status", False):
+            return data
+        else:
+            error_message = data.get("message", "Unknown error occurred")
+            return {"error": error_message}
+    except Exception as e:
+        return {"error": str(e)}
 
