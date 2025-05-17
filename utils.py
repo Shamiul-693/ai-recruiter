@@ -27,8 +27,8 @@ def invite_candidate(interview_id, name, email):
         "interview_id": interview_id,
         "candidates": [
             {
-                "candidate_name": name,
-                "candidate_email": email
+                "name": name,
+                "email": email
             }
         ]
     }
@@ -55,5 +55,8 @@ def get_reports():
             return {"error": error_message}
     except Exception as e:
         return {"error": str(e)}
+
+
+
 
 
