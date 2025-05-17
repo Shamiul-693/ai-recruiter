@@ -23,6 +23,9 @@ if st.button("Create Interview"):
         }
         result = create_interview(payload)
 
+        st.write("Interview creation API response:")
+        st.json(result)
+
         if "error" in result:
             st.error(f"Error creating interview: {result['error']}")
         else:
@@ -30,7 +33,6 @@ if st.button("Create Interview"):
             invite_url = result['data']['invite_url']
             st.success(f"Interview created successfully! Interview ID: {interview_id}")
             st.write(f"Invite URL: [Open Interview]({invite_url})")
-            st.json(result)
 
 st.header("✉️ Invite Candidate")
 interview_id = st.text_input("Interview ID")
@@ -42,8 +44,11 @@ if st.button("Send Invite"):
         st.error("Please fill in all the invite fields!")
     else:
         invite_result = invite_candidate(interview_id, candidate_name, candidate_email)
+
+        st.write("Invite candidate API response:")
+        st.json(invite_result)
+
         if "error" in invite_result:
             st.error(f"Error sending invite: {invite_result['error']}")
         else:
             st.success(f"Invitation sent to {candidate_email}")
-            st.json(invite_result)
