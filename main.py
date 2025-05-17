@@ -22,11 +22,14 @@ if st.button("Create Interview"):
             "is_proctoring_required": True
         }
         result = create_interview(payload)
-        
+
         if "error" in result:
             st.error(f"Error creating interview: {result['error']}")
         else:
-            st.success(f"Interview created successfully! Interview ID: {result.get('interview_id')}")
+            interview_id = result['data']['interview_id']
+            invite_url = result['data']['invite_url']
+            st.success(f"Interview created successfully! Interview ID: {interview_id}")
+            st.write(f"Invite URL: [Open Interview]({invite_url})")
             st.json(result)
 
 st.header("✉️ Invite Candidate")
